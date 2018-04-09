@@ -63,11 +63,11 @@ California due to its high application frequency, doubling that of the following
 
 
 
-[38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
+![38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
 
 
 
-Hdfd
+By removing California we can see a bit more of a seperation between heavy applicants and non, however this is not a very strong indicator.
 
 
 
@@ -75,8 +75,7 @@ Hdfd
 
 
 
-dfdf
-df
+It seems as though states with lower application rates have higher success rates.
 
 
 
