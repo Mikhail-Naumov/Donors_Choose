@@ -8,7 +8,7 @@
 
 ![d_c_1](https://user-images.githubusercontent.com/36013672/38519542-26d8e118-3c0e-11e8-9125-46f7a7c13481.png)
 
-DonorsChoose is a United States based nonprofit organization that facilitates the direct donation to a public school in need. Founded in 2000, by Charles Best has quickly grown to one of the most largest public school nonprofits, breaking 1 million funded projects in January of 2018. 
+In 2000, Charles Best founded DonorsChoose, a United States based nonprofit organization that facilitates the direct donation to a public school in need. Initally spurred by a need to fund his classroom has quickly grown to one of the most largest public school nonprofits, breaking 1 million funded projects in January of 2018.
 
 - The process for Donations is rather simple, and individuals simply go on their website:
     - https://www.donorschoose.org/donors/search.html
@@ -19,8 +19,6 @@ DonorsChoose is a United States based nonprofit organization that facilitates th
 </a>
 
 ## Imports
-
-### The required imports included:
 ***
 #### Pythonic Implimentation:
 ***
@@ -51,24 +49,58 @@ DonorsChoose is a United States based nonprofit organization that facilitates th
 ***
 - gensim : For topic modeling
 - nltk :
-    - Stopwords : English
+    - Stopwords : English & custom
     - Lemmatizer : Preformed for EDA -see 'Text Preprocessing'
 
 ## EDA
 
-![38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
+From the collected data, the naive bayes predictive rate of success for any project is roughly 86%, when no accounting for application variablities.
+
+### Statewide
+***
+
+California due to its high application frequency, doubling that of the following states was ommited to see a further trends.
+
+
+
+[38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
+
+
+
+Hdfd
+
 
 
 ![screen shot 2018-04-09 at 12 50 36 pm](https://user-images.githubusercontent.com/36013672/38519838-0d3de16c-3c0f-11e8-9fe8-344992dad920.png)
 
 
+
+dfdf
+df
+
+
+
 ![screen shot 2018-04-09 at 12 49 54 pm](https://user-images.githubusercontent.com/36013672/38519840-0d71dcec-3c0f-11e8-8c81-459aee42da13.png)
+
+
+Unsurprisingly the frequency of applications peak just before the school season begins.
 
 
 ![screen shot 2018-04-09 at 12 05 12 am](https://user-images.githubusercontent.com/36013672/38519806-fb7eaca4-3c0e-11e8-8768-0aaa964782c5.png)
 
 
+
+Further unsurprisingly, likely due to the increase in appliation volume, the % successful applications drops at the very start of the school season.
+Additionally, while the gender of the applying teacher do seem to track, it may make for an interesting feature to further examine.
+
+
+
 ![screen shot 2018-04-08 at 11 39 04 pm](https://user-images.githubusercontent.com/36013672/38519781-f02503da-3c0e-11e8-9f6a-c0063aa9c1d5.png)
+
+
+
+A very surprising finding is that the mean price for successful projects is consistantly higher than that of un-successful projects. These too follow the regular trend of success over time.
+
 
 
 ![screen shot 2018-04-08 at 11 44 27 pm](https://user-images.githubusercontent.com/36013672/38519782-f031edfc-3c0e-11e8-89ea-2a30751224a0.png)
