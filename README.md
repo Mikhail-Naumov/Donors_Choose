@@ -234,9 +234,6 @@ Because of the unbalanced classes:
 
 
 
-
-
-
 #Future direction:
 Non aggregated sentiment analysis,
 see if essays with high pos & high neg scores do better than those with both low pos and low neg
