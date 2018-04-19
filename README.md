@@ -18,49 +18,30 @@ In 2000, Charles Best founded DonorsChoose, a United States based nonprofit orga
 
 </a>
 
-## Imports
+## Objective
 ***
-#### Pythonic Implimentation:
+#### Local Objective:
 ***
 
-- pandas : for easy of organization
-- numpy : for accelerated implimentation & dependancies
-- tqdm : for progress tracking
-- os : dependancies
-- re : regex for ease of text cleaning
-- gc : Garbage Collection, due to the size of the dataset and memory errors
+- Generate a predictive model to estimate the liklihood of a proposed project being fully funded.
 
-#### Statistical Implimentations:
+#### Global Objective:
 ***
-- matplotlib & seaborn : for visualizations and EDA
-    - _Presented visualizations were generated in Tabealu_
-    - _Inital visualizations were preformed with seaborn_
-- sklearn: 
-    - StandardScalar
-        - Scaling Numerical Values
-    - roc & auc scores
-        - Evaluation Metric
-    - K_fold validation
-        - Validation Method
-    - LabelEncoder
-        - Categorical Encoder
-
-#### NLP Implimentations:
-***
-- gensim : For topic modeling
-- nltk :
-    - Stopwords : English & custom
-    - Lemmatizer : Preformed for EDA -see 'Text Preprocessing'
+- Use this predictive model to:
+    - Simulate the liklihood of success for a proposed project:
+        - Finding the most favorable conditions, with the highest rate of success
+    - Determine which elements & features have the highest impact on a project's success.
+- Using the 180,000+ submissions to learn how to write and when to send a successful proposal.
+    - Use the same methodology for other written application (NIH, Grant Submissions, ect)
 
 ## EDA
 
-From the collected data, the naive bayes predictive rate of success for any project is roughly 86%, when no accounting for application variablities.
+From the collected data, any project is roughly 86%, when no accounting for application variablities.
 
 ### Statewide
 ***
 
 California due to its high application frequency, doubling that of the following states was ommited to see a further trends.
-
 
 
 ![38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
