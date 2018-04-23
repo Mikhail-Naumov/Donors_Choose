@@ -89,25 +89,6 @@ A very surprising finding is that the mean price for successful projects is cons
 
 ## Preprocessing
 
-### Importing & Structuring
-***
-
- The intital data was extracted from Kaggle arrived seperated into 3 csv files:
- 
- | File | Contents |
- |---|---|
- | train.csv | Project Success, Teacher Data, State Data, Project ID |
- | test.csv | Teacher Data, State Data, Project ID |
- | resources.csv | Project Quanity, Project Price, & Project ID |
- 
-While this inital project was _NOT_ a Kaggle submission, later I will preform a prediction using the ```test.csv``` dataset, however for this examination it was ommitted. 
-
-The values in ```resources``` were aggrogated, and organized by the mean & sum cost, as well as the sum quanity. The thinking here was to determine how 'big' of a project each requested project was. These values were merged to the ```train``` on the ```Project ID``` that those projects were assigned to, as to generated a primary dataset to work off of.
-
-- The project descriptions were dropped as the project's description should not have an effect on the successfulness of that project, it was uniform across all of the same projects and not a variable that changes from each individual applying to the same project.
-
-``` eg. If we are trying to see if person A or B is more likely win a raffle, the description of that raffle which is uniform the between the two, should not have an effect on either's success ```
-
 ### Non_Text Preprocessing
 ***
 
@@ -128,11 +109,6 @@ The values in ```resources``` were aggrogated, and organized by the mean & sum c
 | ```"Female"``` |  ```Mrs.```   or    ```"Ms."```| 
 | ```"Male"``` |  ```"Mr."```| 
 | ```"Unk"``` | ```"Teacher"```   or      ```"Dr."```| 
-
-
--other graph-
-
-- All the categorical values were encoded, however they were not encoded with one_hot_encoding, as one_hot_encoding was too computationally taxing. Because the model uses binary trees & boolean indexing, and so the encoded variables were valid and assigned as string. 
 
 ### Text Preprocessing
 ***
