@@ -8,22 +8,23 @@
 
 ![d_c_1](https://user-images.githubusercontent.com/36013672/38519542-26d8e118-3c0e-11e8-9125-46f7a7c13481.png)
 
-In 2000, Charles Best founded DonorsChoose, a United States based nonprofit organization that facilitates the direct donation to a public school in need. Initally spurred by a need to fund his classroom has quickly grown to one of the most largest public school nonprofits, breaking 1 million funded projects in January of 2018.
+Since the recession of 2008 US public schools have grown drastically underfunded, further complicated by the rise in costs of class resources & the growing need for computer heavy instruction. 
+-img-
 
-- The process for Donations is rather simple, and individuals simply go on their website:
-    - https://www.donorschoose.org/donors/search.html
-- Find a project:
-- And give a value donation.
+As a result, teachers increasingly spend personal capital to keep their classes afloat, but these teachers often need additional support. 
 
+DonorsChoose is a United States based nonprofit organization that facilitates the direct donation to a public school in need. 
+
+Applicants supply two essays, one about the project they want funded  and another about the students who will use those resources, and wait to see if their kickstarter like request will be funed.
 
 </a>
 
-## Objective
+## Objectives
 ***
 #### Local Objective:
 ***
 
-- Generate a predictive model to estimate the liklihood of a proposed project being fully funded.
+- Generate a predictive model that estimates the liklihood of a proposed project being fully funded.
 
 #### Global Objective:
 ***
