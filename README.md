@@ -9,7 +9,8 @@
 ![d_c_1](https://user-images.githubusercontent.com/36013672/38519542-26d8e118-3c0e-11e8-9125-46f7a7c13481.png)
 
 Since the recession of 2008 US public schools have grown drastically underfunded, further complicated by the rise in costs of class resources & the growing need for computer heavy instruction. 
--img-
+
+![screen shot 2018-06-06 at 4 16 25 pm](https://user-images.githubusercontent.com/36013672/41062873-13f85f46-69a5-11e8-8cad-6bb861200ef9.png)
 
 As a result, teachers increasingly spend personal capital to keep their classes afloat, but these teachers often need additional support. 
 
