@@ -8,22 +8,24 @@
 
 ![d_c_1](https://user-images.githubusercontent.com/36013672/38519542-26d8e118-3c0e-11e8-9125-46f7a7c13481.png)
 
-In 2000, Charles Best founded DonorsChoose, a United States based nonprofit organization that facilitates the direct donation to a public school in need. Initally spurred by a need to fund his classroom has quickly grown to one of the most largest public school nonprofits, breaking 1 million funded projects in January of 2018.
+Since the recession of 2008 US public schools have grown drastically underfunded, further complicated by the rise in costs of class resources & the growing need for computer heavy instruction. 
 
-- The process for Donations is rather simple, and individuals simply go on their website:
-    - https://www.donorschoose.org/donors/search.html
-- Find a project:
-- And give a value donation.
+![screen shot 2018-06-06 at 4 16 25 pm](https://user-images.githubusercontent.com/36013672/41062873-13f85f46-69a5-11e8-8cad-6bb861200ef9.png)
 
+As a result, teachers increasingly spend personal capital to keep their classes afloat, but these teachers often need additional support. 
+
+DonorsChoose is a United States based nonprofit organization that facilitates the direct donation to a public school in need. 
+
+Applicants supply two essays, one about the project they want funded  and another about the students who will use those resources, and wait to see if their kickstarter like request will be funed.
 
 </a>
 
-## Objective
+## Objectives
 ***
 #### Local Objective:
 ***
 
-- Generate a predictive model to estimate the liklihood of a proposed project being fully funded.
+- Generate a predictive model that estimates the liklihood of a proposed project being fully funded.
 
 #### Global Objective:
 ***
@@ -43,41 +45,21 @@ From the collected data, any project is roughly 86%, when no accounting for appl
 
 California due to its high application frequency, doubling that of the following states was ommited to see a further trends.
 
-
-![38479203-7dda9e58-3b8b-11e8-9705-399554c4d1f3](https://user-images.githubusercontent.com/36013672/38519956-5adf8fce-3c0f-11e8-87f4-2b8ff9d3fd88.png)
-
+![screen shot 2018-06-06 at 4 27 46 pm](https://user-images.githubusercontent.com/36013672/41063417-9420676c-69a6-11e8-96a7-7108c2f61bf0.png)
 
 
 By removing California we can see a bit more of a seperation between heavy applicants and non, however this is not a very strong indicator.
 
 
-
-![screen shot 2018-04-09 at 12 50 36 pm](https://user-images.githubusercontent.com/36013672/38519838-0d3de16c-3c0f-11e8-9fe8-344992dad920.png)
-
-
-
-It seems as though states with lower application rates have higher success rates.
-
-
-
-![screen shot 2018-04-09 at 12 49 54 pm](https://user-images.githubusercontent.com/36013672/38519840-0d71dcec-3c0f-11e8-8c81-459aee42da13.png)
+![screen shot 2018-06-06 at 4 29 13 pm](https://user-images.githubusercontent.com/36013672/41063482-c61402a6-69a6-11e8-88c5-33a93a66c6ab.png)
 
 
 Unsurprisingly the frequency of applications peak just before the school season begins.
 
-
-![screen shot 2018-04-09 at 12 05 12 am](https://user-images.githubusercontent.com/36013672/38519806-fb7eaca4-3c0e-11e8-8768-0aaa964782c5.png)
-
-
+![screen shot 2018-06-06 at 4 30 04 pm](https://user-images.githubusercontent.com/36013672/41063531-e85ff1da-69a6-11e8-80e3-e0b32496d42d.png)
 
 Further unsurprisingly, likely due to the increase in appliation volume, the % successful applications drops at the very start of the school season.
 Additionally, while the gender of the applying teacher do seem to track, it may make for an interesting feature to further examine.
-
-
-
-![screen shot 2018-04-08 at 11 39 04 pm](https://user-images.githubusercontent.com/36013672/38519781-f02503da-3c0e-11e8-9f6a-c0063aa9c1d5.png)
-
-
 
 A very surprising finding is that the mean price for successful projects is consistantly higher than that of un-successful projects. These too follow the regular trend of success over time.
 
@@ -88,6 +70,9 @@ A very surprising finding is that the mean price for successful projects is cons
 
 
 ## Preprocessing
+
+![screen shot 2018-06-06 at 4 26 04 pm](https://user-images.githubusercontent.com/36013672/41063584-0a462634-69a7-11e8-94e4-df6b6d964e0e.png)
+
 
 ### Non_Text Preprocessing
 ***
@@ -166,9 +151,15 @@ Another list of stopwords was generated that removes other words like ```'studen
 
 In preliminary models I used a lemmetizer, however found that it resulted in lemmetized essays being extremely similar, only their 'gist' was maintained. And as that 'gist' was to answer the given question, they were essentally identical.
 
+### Word Cloud
+
+![screen shot 2018-06-06 at 4 35 13 pm](https://user-images.githubusercontent.com/36013672/41063779-9e0a45da-69a7-11e8-8d9a-36c03c46e9d4.png)
 
 
 ## Model Generation
+
+![screen shot 2018-06-06 at 4 26 24 pm](https://user-images.githubusercontent.com/36013672/41063614-22594152-69a7-11e8-857d-19a1b4d4e17d.png)
+
 
 ### Tfidf
 ***
@@ -189,6 +180,17 @@ Because of the unbalanced classes:
 - K-fold validation was preformed as opposed to CV
 - Auc was used a metric, as to measure the False Positives & Negatives
 
+
+## Findings 
+
+Ultimately our model and an auc-roc of .77 meaning we can comfortable say the model can better predict the success of a program than the baseline.
+
+### Important Features
+
+Because of the nature of Random Tree Models, feature extraction is very easy and interpretable. 
+
+![download copy](https://user-images.githubusercontent.com/36013672/41063732-786c08b8-69a7-11e8-879f-0ddf614015c4.png)
+![screen shot 2018-06-06 at 4 37 15 pm](https://user-images.githubusercontent.com/36013672/41063861-e619857a-69a7-11e8-82da-e623e4016141.png)
 
 
 #Future direction:
