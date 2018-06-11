@@ -1,15 +1,3 @@
-import gc
-import re
-
-import numpy as np
-import pandas as pd
-
-from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-
-from tqdm import tqdm_notebook
-
 def Pre_Pro(kaggle=False,One_Hot=False):
     """
     #Kaggle : Generate an X Kaggle test set
@@ -18,6 +6,22 @@ def Pre_Pro(kaggle=False,One_Hot=False):
     #Default - Label Encoding for LGBM
     #One Hot - for Neural Nets
     """
+    
+    import gc
+    import re
+    
+    import numpy as np
+    import pandas as pd
+
+    from nltk.corpus import stopwords
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.preprocessing import LabelEncoder, StandardScaler
+
+    from tqdm import tqdm_notebook
+    
+    
+    
+    
     def date_prep(train):
         train['project_submitted_datetime'] = pd.to_datetime(train['project_submitted_datetime'])
         train['datetime_year'] = train['project_submitted_datetime'].dt.year
