@@ -1,7 +1,7 @@
-def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=True,One_Hot=True,Standard_Scale=True):
+def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_Scale=True):
     """
     Tf_Features : Max TFIDF Features (100)
-    Sample : Only Use 1000 submissions (True)
+    Sample : Only Use x% of submissions (.1)
     One_Hot : One Hot Encode (True)
                 Label Encode (False)
                 
@@ -126,11 +126,21 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=True,One_Hot=True,Standard
                 'Schools'   : pd.read_csv('./Input/New/Schools.csv'),
                 'Teachers'  : pd.read_csv('./Input/New/Teachers.csv')}
 
+
+        #Treating Nulls in 'Teachers'
+    bad_form['Teachers']['Teacher Prefix'] = bad_form['Teachers']['Teacher Prefix'].apply(
+        lambda x: 'Teacher' if x in ['Mx.', np.nan] else x)
+
+    for i in bad_form:
+        bad_form[i] = bad_form[i].dropna()
+    
     ### Data Aggregation
 
     #How much of the data do you want to use?
-    if Sample: df = bad_form['Projects'][:1000].copy(deep=True)
-    else: df = bad_form['Projects'].copy(deep=True)
+    
+    df = bad_form['Projects'][:int(bad_form['Projects'].shape[0] * Sample)].copy(deep=True)
+    #if Sample: df = bad_form['Projects'][:1000].copy(deep=True)
+    #else: df = bad_form['Projects'].copy(deep=True)
 
     #Projects
     print('DataFrame Init')
@@ -231,8 +241,6 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=True,One_Hot=True,Standard
 
     del df['Project ID']
 
-    df = df.dropna()
-
     #s = set(encode_cols+num_cols)
     #df[[x for x in df.columns if x not in s]].head(5)
 
@@ -251,6 +259,9 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=True,One_Hot=True,Standard
 
     ### Encoding / Scaling
 
+    df = df.dropna()
+
+    
     #Preprocessing
     print('Preprocessing')
 
