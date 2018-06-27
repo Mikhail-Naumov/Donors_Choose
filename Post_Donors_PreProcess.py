@@ -263,7 +263,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
 
     
     #Preprocessing
-    print('Preprocessing')
+    print('Encoding')
 
     #Encoding
     if One_Hot:
@@ -278,11 +278,13 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
             df[c] = encod.transform(df[c].astype(str))
         del encod
 
+    print('Encoding 2')
     p = cat_cleaner(df,'Project Subject Category Tree')
     df = df.merge(p,left_index=True,right_index=True)
     del df['Project Subject Category Tree'], p
 
     #Scaling
+    print('Scaling')
     if Standard_Scale:
         Scalar = StandardScaler()
     else:
@@ -310,6 +312,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     extra_words += stopwords.words("english")
 
     for i in text_cols:
+        print("{} Processing".format(str(i)))
         df[i] = df[i].apply(lambda x: text_cleaner(x,extra_words))
 
     del text_cleaner, extra_words, single_l, stopwords
@@ -318,6 +321,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     tfidf = TfidfVectorizer(max_features=Tf_Features, ngram_range = (1,N_Gram))
 
     for i in text_cols:
+        print("{} TFIDF".format(str(i)))
         tfidf.fit(df[i])
         tf_cols = [str(i)+' contains: "'+str(x)+'"' for x in list(tfidf.vocabulary_.keys())]
         df = df.merge(pd.DataFrame(tfidf.transform(df[i]).todense(),columns=tf_cols), left_index=True, right_index=True)
