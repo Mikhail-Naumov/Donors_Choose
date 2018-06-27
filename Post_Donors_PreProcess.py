@@ -64,7 +64,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
         plt.figure(figsize=(15,15))
 
         i = 1
-        for j in tqdm_notebook(bad_form):
+        for j in bad_form:
             plt.subplot(230+i)
             sns.heatmap(pd.DataFrame(bad_form[j].isnull().sum()/bad_form[j].shape[0]*100),
                         annot=True,cmap=sns.color_palette("cool"),linewidth=1,linecolor="white")
@@ -131,8 +131,8 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     bad_form['Teachers']['Teacher Prefix'] = bad_form['Teachers']['Teacher Prefix'].apply(
         lambda x: 'Teacher' if x in ['Mx.', np.nan] else x)
 
-    for i in bad_form:
-        bad_form[i] = bad_form[i].dropna()
+    #for i in bad_form:
+    #    bad_form[i] = bad_form[i].dropna()
     
     ### Data Aggregation
 
@@ -167,6 +167,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     del calendar
     gc.collect()
 
+    
     #Null values from all data sources
 
     #plot_empties(bad_form)
@@ -248,8 +249,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
 
     #compressing data
     print('Compressing Data')
-    compress(df,encode_cols,num_cols)
-
+    compress(df,encode_cols,[])
     del compress
     gc.collect()
 
@@ -259,26 +259,25 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
 
     ### Encoding / Scaling
 
+    #Preprocessing
+    print('Preprocessing')
     df = df.dropna()
 
-    
-    #Preprocessing
-    print('Encoding')
-
     #Encoding
+    le_dict = {}
     if One_Hot:
         df = df.merge(pd.get_dummies(df[encode_cols])
                  ,left_index=True,right_index=True)
         for i in encode_cols:
             del df[i]
     else:
-        for c in tqdm_notebook(encode_cols):
+        for c in encode_cols:
             encod = LabelEncoder()
             encod.fit(df[c].astype(str))
             df[c] = encod.transform(df[c].astype(str))
+            le_dict[c] = dict(zip(encod.classes_, encod.transform(encod.classes_)))
         del encod
 
-    print('Encoding 2')
     p = cat_cleaner(df,'Project Subject Category Tree')
     df = df.merge(p,left_index=True,right_index=True)
     del df['Project Subject Category Tree'], p
@@ -292,7 +291,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
 
     df[num_cols] = Scalar.fit_transform(df[num_cols])
 
-    del One_Hot, LabelEncoder, Standard_Scale, Scalar
+    del LabelEncoder, Standard_Scale, Scalar
     gc.collect()
 
 
@@ -334,4 +333,8 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     X = df.drop(['Project Current Status'],axis=1)
     y = df['Project Current Status']
     df_cols = df.columns
-    return(X,y,df_cols)
+       
+    if One_Hot:
+        return(X,y,df_cols)
+    else:
+        return(X,y,df_cols,le_dict)
