@@ -248,8 +248,8 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
 
 
     #compressing data
-    print('Compressing Data')
-    compress(df,encode_cols,[])
+    #print('Compressing Data')
+    #compress(df,encode_cols,[])
     del compress
     gc.collect()
 
