@@ -372,10 +372,16 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
         text = ' '.join([word for word in text.split() if word not in all_stop])
         return(text)
 
+    df_types = {'Project Type':str,'Project Essay':str, 'Project Need Statement':str, 'Project Subject Category Tree':str, 
+        'Project Grade Level Category':str, 'Project Resource Category':str, 'Project Cost':float, 'Project Current Status':int,
+        'Project Posted Year':int, 'Project Posted Month':str, 'Teacher Prefix':str, 'School Metro Type':str, 
+        'School Percentage Free Lunch':float, 'School State':str, 'School Zip':int,
+        'School District':str, 'Project num Unique Resources':int, 'Total Resource Quantity':float, 'Mean Resource Cost':float,
+        'Total Project Cost':float, 'Median Resource Cost':float, 'Most exp Resource Cost':float, 'Least exp Resource Cost':float, 
+        'Applied Learning':int, 'Care & Hunger':int, 'Health & Sports':int, 'History & Civics':int, 'Literacy & Language':int,
+        'Math & Science':int, 'Music & The Arts':int, 'Special Needs':int, 'Warmth':int}
 
-
-    df = pd.read_csv('./Input/Processed/df_no_encode_yes_essay.csv')
-    del df['Unnamed: 0']
+    df = pd.read_csv("./Input/Processed/df_no_encode_yes_essay.csv",index_col=0,dtype=df_types)
 
     encode_cols = ['Project Type',
                  'Project Posted Year',
@@ -405,7 +411,7 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
     le_dict = {}
 
     #cat_col
-    del df['Project Subject Category Tree']
+    del df['Project Subject Category Tree'], df_types
 
     if One_Hot:
         df = df.merge(pd.get_dummies(df[encode_cols]),left_index=True,right_index=True)
@@ -418,7 +424,10 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
             df[c] = encod.transform(df[c].astype(str))
             le_dict[c] = dict(zip(encod.classes_, encod.transform(encod.classes_)))
         del encod
-
+    
+    del encode_cols, One_Hot, LabelEncoder,
+    
+    
     #Scaling
     print('Scaling')
     if Standard_Scale:
@@ -428,16 +437,18 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
 
     df[num_cols] = Scalar.fit_transform(df[num_cols])
 
-    del One_Hot, LabelEncoder, Standard_Scale, Scalar
+    del Standard_Scale, Scalar, StandardScaler, MinMaxScaler, num_cols
     gc.collect()
 
+    
     #Text Processing
     print('Text Processing')
 
     text_cols = ['Project Essay','Project Need Statement']
 
     #adding more words to 'stopwords'
-    extra_words = ['student','students','education']
+    extra_words = ['student','students','education','learning','school','schools', 'parent','parents','like',
+                   'donotremoveessaydividerthis', 'teachers','teacher', 'children', 'kids','kid','classroom','donotremoveessaydividermy']
     single_l = [x for x in 'abcdefghijklmnopqrstuvwxyz']
     for j in single_l:
         extra_words.append(j)
@@ -447,6 +458,7 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
         df[i] = df[i].apply(lambda x: text_cleaner(x,extra_words))
 
     del text_cleaner, extra_words, single_l, stopwords
+    gc.collect()
 
     #Tfidf
     print('Tfidf')
