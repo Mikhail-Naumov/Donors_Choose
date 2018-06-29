@@ -146,6 +146,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     print('DataFrame Init')
 
     #Structure Target
+    df['Project Current Status'] = df[df['Project Current Status'] != 'Live']
     df['Project Current Status'] = df['Project Current Status'].apply(lambda x: 1 if x == 'Fully Funded' else 0)
 
     #Adding dt features
