@@ -146,7 +146,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     print('DataFrame Init')
 
     #Structure Target
-    df['Project Current Status'] = df[df['Project Current Status'] != 'Live']
+    df = df[df['Project Current Status'] != 'Live']
     df['Project Current Status'] = df['Project Current Status'].apply(lambda x: 1 if x == 'Fully Funded' else 0)
 
     #Adding dt features
@@ -339,3 +339,130 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
         return(X,y,df_cols)
     else:
         return(X,y,df_cols,le_dict)
+    
+    
+    
+    
+    
+    
+def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gram = 1):
+
+    import gc
+    import re
+    import string
+    import numpy as np
+    import pandas as pd
+    from nltk.corpus import stopwords
+
+    from sklearn.preprocessing import StandardScaler, MinMaxScaler
+    from sklearn.preprocessing import LabelEncoder
+
+    from sklearn.feature_extraction.text import TfidfVectorizer
+
+    def text_cleaner(text,all_stop):
+        """
+        clean_str = text_cleaner(dirty_string)
+        """
+        regex = re.compile('[%s]' % re.escape(string.punctuation))
+
+        text = text.lower()
+        text = text.replace('<!--DONOTREMOVEESSAYDIVIDER-->',' ')
+        text = text.replace('\n' , ' ')
+        text = regex.sub('',text)
+        text = ' '.join([word for word in text.split() if word not in all_stop])
+        return(text)
+
+
+
+    df = pd.read_csv('./Input/Processed/df_no_encode_yes_essay.csv')
+    del df['Unnamed: 0']
+
+    encode_cols = ['Project Type',
+                 'Project Posted Year',
+                 'Project Posted Month',
+                 'Project Grade Level Category',
+                 'Project Resource Category',
+                 'Teacher Prefix',
+                 'School Metro Type',
+                 'School State',
+                 'School District',
+                 'School Zip']
+
+    num_cols    = ['Project Cost',
+                 'School Percentage Free Lunch',
+                 'Project num Unique Resources',
+                 'Total Resource Quantity',
+                 'Mean Resource Cost',
+                 'Total Project Cost',
+                 'Median Resource Cost',
+                 'Most exp Resource Cost',
+                 'Least exp Resource Cost']
+
+    #Preprocessing
+    print('Encoding')
+
+    #Encoding
+    le_dict = {}
+
+    #cat_col
+    del df['Project Subject Category Tree']
+
+    if One_Hot:
+        df = df.merge(pd.get_dummies(df[encode_cols]),left_index=True,right_index=True)
+        for i in encode_cols:
+            del df[i]
+    else:
+        for c in encode_cols:
+            encod = LabelEncoder()
+            encod.fit(df[c].astype(str))
+            df[c] = encod.transform(df[c].astype(str))
+            le_dict[c] = dict(zip(encod.classes_, encod.transform(encod.classes_)))
+        del encod
+
+    #Scaling
+    print('Scaling')
+    if Standard_Scale:
+        Scalar = StandardScaler()
+    else:
+        Scalar = MinMaxScaler()
+
+    df[num_cols] = Scalar.fit_transform(df[num_cols])
+
+    del One_Hot, LabelEncoder, Standard_Scale, Scalar
+    gc.collect()
+
+    #Text Processing
+    print('Text Processing')
+
+    text_cols = ['Project Essay','Project Need Statement']
+
+    #adding more words to 'stopwords'
+    extra_words = ['student','students','education']
+    single_l = [x for x in 'abcdefghijklmnopqrstuvwxyz']
+    for j in single_l:
+        extra_words.append(j)
+    extra_words += stopwords.words("english")
+
+    for i in text_cols:
+        df[i] = df[i].apply(lambda x: text_cleaner(x,extra_words))
+
+    del text_cleaner, extra_words, single_l, stopwords
+
+    #Tfidf
+    print('Tfidf')
+    tfidf = TfidfVectorizer(max_features=Tf_Features, ngram_range=(1,N_Gram))
+    for i in text_cols:
+        tfidf.fit(df[i])
+        tf_cols = [str(i)+' contains: "'+str(x)+'"' for x in list(tfidf.vocabulary_.keys())]
+        df = df.merge(pd.DataFrame(tfidf.transform(df[i]).todense(),columns=tf_cols), left_index=True, right_index=True)
+
+    for i in text_cols:
+        del df[i]
+    del tfidf, tf_cols
+
+    X = df.drop(['Project Current Status'],axis=1)
+    y = df['Project Current Status']
+    df_cols = df.columns
+    #le_dict
+
+    return(X, y, df_cols, le_dict)
