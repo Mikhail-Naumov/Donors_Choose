@@ -1,5 +1,7 @@
 def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_Scale=True):
     """
+    Pulls data from the original csv files and generates x,y features
+    
     Tf_Features : Max TFIDF Features (100)
     Sample : Only Use x% of submissions (.1)
     One_Hot : One Hot Encode (True)
@@ -346,6 +348,10 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     
     
 def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gram = 1):
+    """
+    Shorted Preprocessor, pulling from not the original csv files, but rather from precleaned and joined csv file locally saved.
+    """
+    
 
     import gc
     import re
