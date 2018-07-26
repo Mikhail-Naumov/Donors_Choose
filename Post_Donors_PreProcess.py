@@ -347,7 +347,7 @@ def Post_Donor_PrePro(Tf_Features=100,N_Gram=1,Sample=.1,One_Hot=True,Standard_S
     
     
     
-def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gram = 1):
+def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gram = 1,Force=False):
     """
     Shorted Preprocessor, pulling from not the original csv files, but rather from precleaned and joined csv file locally saved.
     """
@@ -410,6 +410,13 @@ def Diet_Prepro(One_Hot = False, Standard_Scale = True, Tf_Features = 100, N_Gra
                  'Most exp Resource Cost',
                  'Least exp Resource Cost']
 
+    #Force
+    if Force:
+        drop_indices = np.random.choice(df[df['Project Current Status']==1].index, 500000, replace=False)
+        df = df.drop(drop_indices)
+
+    
+    
     #Preprocessing
     print('Encoding')
 
